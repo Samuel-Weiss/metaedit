@@ -10,16 +10,16 @@ if (TYPO3_MODE === 'BE') {
      */
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
         'Whitenote.' . $_EXTKEY,
-        'file',     // Make module a submodule of 'web'
+        'file',     // Make module a submodule of 'file'
         'metaedit',    // Submodule key
         '',                        // Position
         array(
-            'Metafiles' => 'list,iglist,update',
+            'Metafiles' => 'list,update',
 
         ),
         array(
             'access' => 'user,group',
-            'icon' => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
+            'icon' => 'EXT:core/Resources/Public/Icons/T3Icons/apps/apps-filetree-folder-media.svg',
             'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_metaedit.xlf',
         )
     );
@@ -27,6 +27,3 @@ if (TYPO3_MODE === 'BE') {
 }
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'metaedit');
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_metaedit_domain_model_dummy', 'EXT:metaedit/Resources/Private/Language/locallang_csh_tx_metaedit_domain_model_dummy.xlf');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_metaedit_domain_model_dummy');
