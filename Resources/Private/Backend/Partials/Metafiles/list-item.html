@@ -1,0 +1,53 @@
+<f:render section="Header" arguments="{_all}"/>
+<f:render section="Preview" arguments="{_all}"/>
+<f:render section="Basic" arguments="{_all}"/>
+
+<div class="url" data-url="{f:uri.action(action:'update', arguments:'{storage:"
+     {f.storage.configuration.caseSensitive}", identifier:"{f.identifier}",id:"{f.properties.uid}"}')}"></div>
+
+
+<f:section name="Header">
+    <div class="media">
+        <div class="media-left">
+            <span class="media-object" title="Anzeigen">
+                <span class="t3js-icon icon icon-size-default icon-state-default icon-mimetypes-media-image">
+                    <span class="icon-markup">
+                        <img src="/typo3/sysext/core/Resources/Public/Icons/T3Icons/mimetypes/mimetypes-media-image.svg"
+                             width="32" height="32">
+                    </span>
+                </span>
+            </span>
+        </div>
+        <div class="media-body">
+            <h3 class="h5 media-heading">
+                {f.name}<br>
+                <small class="text-muted">{f.properties.mime_type}</small>
+            </h3>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="Preview">
+    <div class="preview">
+        <f:media
+                file="{f}"
+                width="500"
+                style="max-width:100%;height:auto;width:auto;"
+        />
+    </div>
+</f:section>
+
+<f:section name="Basic">
+    <div>
+        <label>Titel</label>
+        <f:form.textfield name="title" value="{f.properties.title}"/>
+    </div>
+    <div>
+        <label>Alternativtext</label>
+        <f:form.textfield name="alternative" value="{f.properties.alternative}"/>
+    </div>
+    <div>
+        <label>Beschreibung</label>
+        <f:form.textarea name="description" value="{f.properties.description}"/>
+    </div>
+</f:section>

@@ -1,0 +1,146 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+<f:layout name="Default"/>
+
+<f:section name="content">
+
+    <f:flashMessages/>
+
+    <f:if condition="{warningMessages}">
+        <f:be.infobox title="{warningTitle}" state="2">{warningMessages -> f:format.raw()}</f:be.infobox>
+    </f:if>
+
+    <style>
+        .metaEdit input,
+        .metaEdit textarea{
+            width: 100%;
+        }
+        .metaEdit .media {
+            margin-bottom: 5px;
+        }
+        input.changed {
+            color : red;
+        }
+        textarea.changed {
+            color : red;
+        }
+        .update{
+            cursor: pointer;
+        }
+
+        .entry.changed {
+            background-color: rgba(0, 0, 0, .06);
+            opacity:.5;
+        }
+
+        .row.metaEdit > div {
+            float:none;
+            display:inline-block;
+            vertical-align: top;
+        }
+
+    </style>
+
+    <div class="row metaEdit"><f:for each="{files}" as="f"><div class="col-xs-6 col-sm-4">
+                <div class="panel panel-default t3js-equalheight entry">
+                    <div class="panel-body panel-body-highlightlinks">
+                        <f:render partial="Metafiles/list-item" arguments="{_all}"/>
+                    </div>
+                </div>
+            </div></f:for></div>
+    <button class="updaten">updaten</button>
+
+
+    <script src="/typo3/sysext/core/Resources/Public/JavaScript/Contrib/require.js" type="text/javascript"></script>
+    <script src="/typo3/sysext/core/Resources/Public/JavaScript/Contrib/jquery/jquery-2.2.3.js" type="text/javascript"></script>
+    <script>
+        console.log(jQuery);
+        var $ = jQuery;
+
+        console.log($("window"));
+        ( function(window, document, $, Response) {
+            (function($, sr) {
+                var debounce = function(func, threshold, execAsap) {
+                    var timeout;
+
+                    return function debounced() {
+                        var obj = this, args = arguments;
+                        function delayed() {
+                            if (!execAsap)
+                                func.apply(obj, args);
+                            timeout = null;
+                        };
+
+                        if (timeout)
+                            clearTimeout(timeout);
+                        else if (execAsap)
+                            func.apply(obj, args);
+
+                        timeout = setTimeout(delayed, threshold || 500);
+                    };
+                }
+                // smartresize
+                jQuery.fn[sr] = function(fn) {
+                    return fn ? this.bind('change', debounce(fn)) : this.trigger(sr);
+                };
+            })(jQuery, 'smartchange');
+
+            $(document).ready(function() {
+
+                $("input").change(function() {
+                    $(this).addClass("changed");
+                });
+                $("input").smartchange(function() {
+                    var entry = $(this).closest(".entry");
+                    updateDb(entry);
+                });
+                $("textarea").change(function() {
+                    $(this).addClass("changed");
+                });
+                $("textarea").smartchange(function() {
+                    var entry = $(this).closest(".entry");
+                    updateDb(entry);
+                });
+
+                function updateDb(entry) {
+                    var url = entry.find(".url").attr("data-url");
+
+                    var entryObject = {
+                        title: entry.find("[name=title]").val(),
+                        alternative: entry.find("[name=alternative]").val(),
+                        description: entry.find("[name=description]").val()
+                    }
+
+
+
+                    console.log(encodeURIComponent(JSON.stringify(entryObject)));
+                    url += '&tx_metaedit_file_metaeditmetaedit%5Bdata%5D='+encodeURIComponent(JSON.stringify(entryObject));
+
+                    console.log(url);
+                    console.log(entryObject);
+
+                    console.log(entry.find(".url").html());
+
+                    entry.addClass("changed");
+                    $.ajax({
+                        url : url,
+                        context : document.body
+                    }).done(function() {
+                        entry.find("input").removeClass("changed");
+                        entry.find("textarea").removeClass("changed")
+                        entry.removeClass("changed");
+                    });
+                }
+
+
+                $(".updaten").click(function() {
+                    var entry = $(this).closest(".entry");
+                    updateDb(entry);
+                });
+            });
+
+        }(this, this.document, this.jQuery, this.Response));
+
+    </script>
+
+
+</f:section>

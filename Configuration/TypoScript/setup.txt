@@ -1,0 +1,12 @@
+
+ # Module configuration
+module.tx_metaedit_file_metaeditmetaedit {
+	persistence {
+		storagePid = {$module.tx_metaedit_metaedit.persistence.storagePid}
+	}
+	view {
+		templateRootPaths.0 = {$module.tx_metaedit_metaedit.view.templateRootPath}
+		partialRootPaths.0 = {$module.tx_metaedit_metaedit.view.partialRootPath}
+		layoutRootPaths.0 = {$module.tx_metaedit_metaedit.view.layoutRootPath}
+	}
+}
