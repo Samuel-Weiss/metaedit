@@ -1,62 +1,66 @@
 <f:be.container
-				loadJQuery="true">
-	<div class="typo3-fullDoc">
-		<div id="typo3-docheader">
-			<div class="typo3-docheader-functions">
-				<div class="left">
-					<f:be.buttons.csh />
-					<f:be.menus.actionMenu>
-						<f:be.menus.actionMenuItem label="Overview" controller="" action="list" />
-						<f:be.menus.actionMenuItem label="Overview Details" controller="" action="list" />
+        loadJQuery="true">
+    <div class="typo3-fullDoc">
+        <div id="typo3-docheader">
+            <div class="typo3-docheader-functions">
+                <div class="left">
+                    <f:be.buttons.csh />
+                    <f:be.menus.actionMenu>
+                        <f:be.menus.actionMenuItem label="Overview" controller="" action="list" />
+                        <f:be.menus.actionMenuItem label="Overview Details" controller="" action="list" />
 
-						<f:be.menus.actionMenuItem label="update" controller="" action="update" />
-						
-					</f:be.menus.actionMenu>
-				</div>
-				<div class="right">
-					<b>{folderObject.name}</b>
-					{folderObject.identifier}
-				</div>
-			</div>
-			<div class="typo3-docheader-buttons">
-				<div class="left">
+                        <f:be.menus.actionMenuItem label="update" controller="" action="update" />
 
-				</div>
-				<div class="right">
-					<f:be.buttons.shortcut />
-				</div>
-			</div>
+                    </f:be.menus.actionMenu>
+                </div>
+                <div class="right">
+                    <b>{folderObject.name}</b>
+                    {folderObject.identifier}
+                </div>
+            </div>
+            <div class="typo3-docheader-buttons">
+                <div class="left">
+                    <f:for each="{systemLanguages}" as="language">
+                        <f:if condition="{language.title}">
+                            <f:form.checkbox id="langid-{language.uid}" name="language[{language.uid}]" checked="{f:if(condition:'{language.uid}==0', then:'1')}" value="{language.uid}" />
+                            <label for="langid-{language.uid}">{language.title}</label>
+                        </f:if>
+                    </f:for>
+                </div>
+                <div class="right">
+                    <f:be.buttons.shortcut />
+                </div>
+            </div>
 
-		</div>
-		<div id="typo3-docbody">
-			<div id="typo3-inner-docbody">
-				<f:flashMessages />
-				<h1>! really first preview</h1>
-				<f:render section="content" />
+        </div>
+        <div id="typo3-docbody">
+            <div id="typo3-inner-docbody">
+                <f:flashMessages />
+                <h1>! really first preview</h1>
+                <f:render section="content" />
 
+                <h1>todo</h1>
+                Must have
+                <ul>
+                    <li>multi lang</li>
+                    <li>div. css/js/html</li>
+                    <li>f:media absolute path</li>
+                    <li>mime icon change</li>
+                    <li>use translate for labels etc.</li>
+                    <li>cast DB Querys</li>
+                    <li>Update API</li>
+                    <li>include jquery</li>
+                </ul>
 
-				<h1>todo</h1>
-				Must have
-				<ul>
-					<li>div. css/js/html</li>
-					<li>f:media absolute path</li>
-					<li>ajax enable/disable</li>
-					<li>mime icon change</li>
-					<li>Loading Icon insted of color</li>
-					<li>use translate for labels etc.</li>
-					<li>cast DB Querys</li>
-					<li>Update API</li>
-					<li>include jquery</li>
-				</ul>
-
-				nice to have
-				<ul>
-					<li>multi lang</li>
-					<li>display: where file is used</li>
-					<li>Folder Navigation in Header</li>
-					<li>RTE in Description</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+                nice to have
+                <ul>
+                    <li>ajax enable/disable</li>
+                    <li>Loading Icon insted of color</li>
+                    <li>display: where file is used</li>
+                    <li>Folder Navigation in Header</li>
+                    <li>RTE in Description</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </f:be.container>

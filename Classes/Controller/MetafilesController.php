@@ -32,6 +32,7 @@ use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FolderInterface;
+use TYPO3\CMS\Backend\Configuration\TranslationConfigurationProvider;
 
 /**
  * MetafilesController
@@ -81,6 +82,18 @@ class MetafilesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             $this->view->assign('files', $files);
             $this->view->assign('folderObject', $folderObject);
 
+            /* Get Languages */
+            // first two keys are "0" (default) and "-1" (multiple), after that comes the "other languages"
+            $allSystemLanguages = GeneralUtility::makeInstance(TranslationConfigurationProvider::class)->getSystemLanguages();
+            $systemLanguages = array_filter($allSystemLanguages, function($languageRecord) {
+                if ($languageRecord[ 'uid' ] === -1) {
+                    return FALSE;
+                } else {
+                    return TRUE;
+                }
+            });
+
+            $this->view->assign('systemLanguages', $systemLanguages);
 
         }
 
